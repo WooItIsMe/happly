@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特别的生日祝福</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #0a0e2e;
+            color: white;
+            overflow-x: hidden;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://img.freepik.com/free-photo/beautiful-shot-clear-sky-during-sunset_181624-24228.jpg') center/cover;
+            z-index: -2;
+            opacity: 0.9;
+            animation: backgroundZoom 30s infinite alternate;
+        }
+        
+        @keyframes backgroundZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: -1;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
+            overflow: hidden;
+            animation: fadeIn 2s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: titleGlow 3s infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            0% { text-shadow: 0 0 10px rgba(255, 107, 107, 0.5); }
+            100% { text-shadow: 0 0 20px rgba(255, 107, 107, 0.8); }
+        }
+        
+        .photo-album {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            margin: 20px 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .photo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out, transform 1s ease-in-out;
+            border-radius: 15px;
+            transform: scale(0.9);
+        }
+        
+        .photo.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .message {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            animation: textFloat 6s infinite ease-in-out;
+        }
+        
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #ff6b6b, #ffa3a3);
+            width: 0%;
+            transition: width 0.1s linear;
+            border-radius: 10px;
+        }
+        
+        .music-info {
+            margin-top: 15px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .music-info i {
+            margin-right: 8px;
+            color: #ff6b6b;
+        }
+        
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: floatUp 4s linear forwards;
+            opacity: 0.7;
+        }
+        
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .next-page-button {
+            display: none;
+            margin: 20px auto;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .next-page-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="overlay"></div>
+    
+    <div class="container">
+        <h1>🎉 生日快乐！ 🎉</h1>
+        <div class="message">
+            从人海到我们，<br>
+            这些珍贵的瞬间都值得铭记...
+        </div>
+        
+        <div class="photo-album" id="photoAlbum">
+            <!-- 照片将通过JS动态添加 -->
+        </div>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="music-info">
+            <i class="fas fa-music"></i>
+            <span id="nowPlaying">正在播放: 张杰 - 从人海到我们</span>
+        </div>
+        
+        <button class="next-page-button" id="nextPageBtn">继续下一章</button>
+    </div>
+    
+    <audio id="birthdaySong" autoplay loop>
+        <!-- 替换为张杰《从人海到我们》的实际音乐链接 -->
+        <source src="https://music.163.com/song/media/outer/url?id=1824045033.mp3" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+    
+    <script>
+        // 照片数组 - 替换为你的本地图片路径
+        const photos = [
+            'photo1.jpg',
+            'photo2.jpg',
+            'photo3.jpg',
+            'photo4.jpg',
+            'photo5.jpg'
+        ];
+        
+        // DOM元素
+        const photoAlbum = document.getElementById('photoAlbum');
+        const progressBar = document.getElementById('progressBar');
+        const birthdaySong = document.getElementById('birthdaySong');
+        const nowPlaying = document.getElementById('nowPlaying');
+        const nextPageBtn = document.getElementById('nextPageBtn');
+        
+        // 当前照片索引
+        let currentPhotoIndex = 0;
+        // 相册是否播放完毕
+        let albumFinished = false;
+        // 照片切换间隔
+        const PHOTO_INTERVAL = 4000; // 4秒切换一次
+        
+        // 初始化相册
+        function initPhotoAlbum() {
+            photos.forEach((photo, index) => {
+                const img = document.createElement('img');
+                img.src = photo;
+                img.alt = `生日照片 ${index + 1}`;
+                img.className = 'photo';
+                if (index === 0) img.classList.add('active');
+                photoAlbum.appendChild(img);
+            });
+        }
+        
+        // 切换照片
+        function changePhoto() {
+            const allPhotos = document.querySelectorAll('.photo');
+            allPhotos[currentPhotoIndex].classList.remove('active');
+            
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            allPhotos[currentPhotoIndex].classList.add('active');
+            
+            // 更新进度条
+            progressBar.style.width = `${(currentPhotoIndex + 1) / photos.length * 100}%`;
+            
+            // 创建漂浮的爱心
+            createHeart();
+            
+            // 检查是否播放完所有照片
+            if (currentPhotoIndex === photos.length - 1) {
+                setTimeout(() => {
+                    albumFinished = true;
+                    showNextPageButton();
+                }, PHOTO_INTERVAL);
+            }
+        }
+        
+        // 创建漂浮的爱心
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+            heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            document.body.appendChild(heart);
+            
+            // 移除爱心元素
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+        
+        // 显示下一页按钮
+        function showNextPageButton() {
+            nextPageBtn.style.display = 'block';
+            nextPageBtn.style.animation = 'fadeIn 1s ease-out';
+            
+            // 添加点击事件
+            nextPageBtn.addEventListener('click', () => {
+                // 跳转到下一个页面
+                window.location.href = "wishes.html"; // 替换为你的下一个页面
+                
+                // 如果没有下一个页面，可以显示一个提示
+                // alert("即将进入下一章...");
+            });
+        }
+        
+        // 处理音乐自动播放
+        function handleMusicAutoplay() {
+            // 由于浏览器限制，可能需要用户交互后才能播放音频
+            const playMusic = () => {
+                birthdaySong.play().catch(e => {
+                    console.log("自动播放被阻止，需要用户交互");
+                    nowPlaying.textContent = "点击屏幕播放音乐";
+                    
+                    // 添加点击事件来启动音乐
+                    document.body.addEventListener('click', () => {
+                        birthdaySong.play();
+                        nowPlaying.textContent = "正在播放: 张杰 - 从人海到我们";
+                    }, { once: true });
+                });
+            };
+            
+            // 尝试自动播放
+            playMusic();
+        }
+        
+        // 初始化页面
+        function init() {
+            initPhotoAlbum();
+            
+            // 处理音乐自动播放
+            handleMusicAutoplay();
+            
+            // 设置照片切换间隔
+            const photoInterval = setInterval(changePhoto, PHOTO_INTERVAL);
+            
+            // 如果相册播放完毕，清除间隔
+            if (albumFinished) {
+                clearInterval(photoInterval);
+            }
+            
+            // 每隔一段时间创建爱心
+            setInterval(createHeart, 1500);
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>

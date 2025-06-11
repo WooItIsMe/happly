@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>特别生日祝福</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #0a0e2e;
+            color: white;
+            overflow-x: hidden;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://img.freepik.com/free-vector/hand-painted-watercolor-pastel-sky-background_23-2148902771.jpg') center/cover;
+            z-index: -2;
+            opacity: 0.8;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://img.freepik.com/free-vector/starry-night-sky-with-shining-stars_1048-14352.jpg') repeat;
+            z-index: -1;
+            animation: stars-move 100s linear infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes stars-move {
+            from { background-position: 0 0; }
+            to { background-position: -1000px 500px; }
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: title-bounce 2s infinite;
+        }
+        
+        @keyframes title-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .photo-album {
+            width: 100%;
+            height: 300px;
+            position: relative;
+            margin: 20px 0;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .photo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            border-radius: 15px;
+        }
+        
+        .photo.active {
+            opacity: 1;
+        }
+        
+        .message {
+            font-size: 18px;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+        .password-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .password-box {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 30px;
+            border-radius: 15px;
+            width: 80%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: modal-appear 0.5s ease-out;
+        }
+        
+        @keyframes modal-appear {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+        
+        .password-box h2 {
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .password-input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, #ff758c, #ff7eb3);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #f00;
+            opacity: 0;
+            z-index: 99;
+            animation: confetti-fall 5s linear forwards;
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+        
+        .music-control i {
+            font-size: 24px;
+            color: white;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #ff758c, #ff7eb3);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="stars"></div>
+    
+    <div class="container">
+        <h1>🎉 生日快乐！ 🎉</h1>
+        <div class="message">
+            亲爱的朋友，祝你生日快乐！<br>
+            让我们一起回顾这些美好时刻...
+        </div>
+        
+        <div class="photo-album" id="photoAlbum">
+            <!-- 照片将通过JS动态添加 -->
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress" id="progressBar"></div>
+        </div>
+    </div>
+    
+    <div class="music-control" id="musicControl">
+        <i class="fas fa-music"></i>
+    </div>
+    
+    <div class="password-modal" id="passwordModal">
+        <div class="password-box">
+            <h2>输入密码听秘密留言</h2>
+            <input type="password" class="password-input" id="passwordInput" placeholder="请输入密码">
+            <button class="submit-btn" id="submitPassword">确认</button>
+            <p id="errorMsg" style="color: #ffcc00; margin-top: 10px; display: none;">密码错误，请再试一次</p>
+        </div>
+    </div>
+    
+    <audio id="birthdaySong" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+    
+    <audio id="secretMessage" preload="auto">
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // 照片数组 - 替换为你的本地图片路径
+        const photos = [
+            'photo1.jpg',
+            'photo2.jpg',
+            'photo3.jpg',
+            'photo4.jpg',
+            'photo5.jpg'
+        ];
+        
+        // 密码设置
+        const SECRET_PASSWORD = "xihuan"; // 你可以修改这个密码
+        
+        // DOM元素
+        const photoAlbum = document.getElementById('photoAlbum');
+        const passwordModal = document.getElementById('passwordModal');
+        const passwordInput = document.getElementById('passwordInput');
+        const submitPassword = document.getElementById('submitPassword');
+        const errorMsg = document.getElementById('errorMsg');
+        const birthdaySong = document.getElementById('birthdaySong');
+        const secretMessage = document.getElementById('secretMessage');
+        const musicControl = document.getElementById('musicControl');
+        const progressBar = document.getElementById('progressBar');
+        
+        // 当前照片索引
+        let currentPhotoIndex = 0;
+        // 相册是否播放完毕
+        let albumFinished = false;
+        // 音乐是否播放
+        let isPlaying = true;
+        
+        // 初始化相册
+        function initPhotoAlbum() {
+            photos.forEach((photo, index) => {
+                const img = document.createElement('img');
+                img.src = photo;
+                img.alt = `生日照片 ${index + 1}`;
+                img.className = 'photo';
+                if (index === 0) img.classList.add('active');
+                photoAlbum.appendChild(img);
+            });
+        }
+        
+        // 切换照片
+        function changePhoto() {
+            const allPhotos = document.querySelectorAll('.photo');
+            allPhotos[currentPhotoIndex].classList.remove('active');
+            
+            currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
+            allPhotos[currentPhotoIndex].classList.add('active');
+            
+            // 更新进度条
+            progressBar.style.width = `${(currentPhotoIndex + 1) / photos.length * 100}%`;
+            
+            // 检查是否播放完所有照片
+            if (currentPhotoIndex === photos.length - 1) {
+                setTimeout(() => {
+                    albumFinished = true;
+                    showPasswordModal();
+                }, 3000);
+            }
+        }
+        
+        // 显示密码弹窗
+        function showPasswordModal() {
+            passwordModal.style.display = 'flex';
+            createConfetti();
+        }
+        
+        // 验证密码
+        function checkPassword() {
+            if (passwordInput.value === SECRET_PASSWORD) {
+                // 密码正确
+                errorMsg.style.display = 'none';
+                createConfetti();
+                
+                // 停止生日歌，播放秘密留言
+                birthdaySong.pause();
+                secretMessage.play();
+                
+                // 跳转到下一个页面（这里简单显示一个提示）
+                setTimeout(() => {
+                    window.location.href = "message.html"; // 替换为你的下一个页面
+                    // 如果没有下一个页面，可以显示一个提示
+                    alert("密码正确！正在播放秘密留言...");
+                }, 1000);
+            } else {
+                // 密码错误
+                errorMsg.style.display = 'block';
+                passwordInput.value = '';
+            }
+        }
+        
+        // 创建彩色纸屑效果
+        function createConfetti() {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = `${Math.random() * 100}vw`;
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                confetti.style.animationDelay = `${Math.random() * 2}s`;
+                document.body.appendChild(confetti);
+                
+                // 移除彩色纸屑元素
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+        
+        // 音乐控制
+        function toggleMusic() {
+            if (isPlaying) {
+                birthdaySong.pause();
+                musicControl.innerHTML = '<i class="fas fa-volume-mute"></i>';
+            } else {
+                birthdaySong.play();
+                musicControl.innerHTML = '<i class="fas fa-music"></i>';
+            }
+            isPlaying = !isPlaying;
+        }
+        
+        // 初始化页面
+        function init() {
+            initPhotoAlbum();
+            
+            // 自动播放音乐
+            birthdaySong.play();
+            
+            // 设置照片切换间隔
+            const photoInterval = setInterval(changePhoto, 3000);
+            
+            // 如果相册播放完毕，清除间隔
+            if (albumFinished) {
+                clearInterval(photoInterval);
+            }
+            
+            // 事件监听
+            submitPassword.addEventListener('click', checkPassword);
+            passwordInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    checkPassword();
+                }
+            });
+            
+            musicControl.addEventListener('click', toggleMusic);
+            
+            // 添加点击屏幕任意位置关闭音乐控制的功能
+            document.addEventListener('click', (e) => {
+                if (e.target !== musicControl && !musicControl.contains(e.target)) {
+                    // 可以添加其他点击功能
+                }
+            });
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>

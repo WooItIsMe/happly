@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生日祝福 · 终章</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', sans-serif;
+            background-color: #0a0e2e;
+            color: white;
+            overflow-x: hidden;
+            height: 100vh;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a1a4a, #0a0a20);
+            z-index: -2;
+        }
+        
+        .stars {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://img.freepik.com/free-vector/starry-night-sky-with-shining-stars_1048-14352.jpg') repeat;
+            z-index: -1;
+            animation: stars-move 100s linear infinite;
+            opacity: 0.6;
+        }
+        
+        @keyframes stars-move {
+            from { background-position: 0 0; }
+            to { background-position: -1000px 500px; }
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            padding: 30px;
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            margin: 20px 0;
+            overflow: hidden;
+            animation: fadeIn 2s ease-out;
+            position: relative;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        h1 {
+            font-size: 28px;
+            margin-bottom: 25px;
+            color: #ff9e9e;
+            text-shadow: 0 0 10px rgba(255, 158, 158, 0.5);
+            animation: pulse 3s infinite alternate;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .message {
+            font-size: 18px;
+            line-height: 1.8;
+            margin-bottom: 25px;
+            color: #fff;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            animation: textFloat 6s infinite ease-in-out;
+        }
+        
+        @keyframes textFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 25px;
+            border-radius: 50%;
+            border: 5px solid rgba(255, 255, 255, 0.3);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+            animation: rotateFrame 20s linear infinite;
+        }
+        
+        @keyframes rotateFrame {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .final-photo {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            animation: photoZoom 10s infinite alternate;
+        }
+        
+        @keyframes photoZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+        }
+        
+        .play-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .play-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .play-button:active {
+            transform: translateY(1px);
+        }
+        
+        .play-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .play-button:hover::before {
+            left: 100%;
+        }
+        
+        .heart {
+            position: absolute;
+            pointer-events: none;
+            animation: floatUp 4s linear forwards;
+            opacity: 0.7;
+            font-size: 20px;
+        }
+        
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .audio-controls {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 5px;
+            background-color: rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+            margin-top: 15px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(to right, #ff6b6b, #ffa3a3);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        
+        .time-display {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            margin-top: 5px;
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.7);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="background"></div>
+    <div class="stars"></div>
+    
+    <div class="container">
+        <h1>🎉 生日快乐！ 🎉</h1>
+        
+        <div class="photo-frame">
+            <img src="final-photo.jpg" alt="特别时刻" class="final-photo">
+        </div>
+        
+        <div class="message">
+            这是我们共同的珍贵回忆<br>
+            愿未来的每一天都如今天般美好<br>
+            点击下方按钮收听特别留言...
+        </div>
+        
+        <button class="play-button" id="playButton">
+            <i class="fas fa-play"></i> 播放特别留言
+        </button>
+        
+        <div class="audio-controls" id="audioControls" style="display: none;">
+            <div class="progress-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div class="time-display">
+                <span id="currentTime">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
+    </div>
+    
+    <audio id="secretAudio">
+        <!-- 本地音频文件 -->
+        <source src="secret-message.mp3" type="audio/mpeg">
+        您的浏览器不支持音频元素。
+    </audio>
+    
+    <script>
+        // DOM元素
+        const playButton = document.getElementById('playButton');
+        const audioControls = document.getElementById('audioControls');
+        const progressBar = document.getElementById('progressBar');
+        const currentTimeDisplay = document.getElementById('currentTime');
+        const durationDisplay = document.getElementById('duration');
+        const secretAudio = document.getElementById('secretAudio');
+        
+        // 创建漂浮的爱心
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '❤️';
+            heart.style.left = `${Math.random() * 100}vw`;
+            heart.style.fontSize = `${Math.random() * 20 + 10}px`;
+            heart.style.animationDuration = `${Math.random() * 3 + 2}s`;
+            document.body.appendChild(heart);
+            
+            // 移除爱心元素
+            setTimeout(() => {
+                heart.remove();
+            }, 4000);
+        }
+        
+        // 格式化时间(秒 → 分:秒)
+        function formatTime(seconds) {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+        
+        // 更新进度条
+        function updateProgress() {
+            const progress = (secretAudio.currentTime / secretAudio.duration) * 100;
+            progressBar.style.width = `${progress}%`;
+            currentTimeDisplay.textContent = formatTime(secretAudio.currentTime);
+        }
+        
+        // 初始化音频
+        function initAudio() {
+            // 设置音频时长显示
+            secretAudio.addEventListener('loadedmetadata', () => {
+                durationDisplay.textContent = formatTime(secretAudio.duration);
+            });
+            
+            // 更新进度条
+            secretAudio.addEventListener('timeupdate', updateProgress);
+            
+            // 音频结束时重置
+            secretAudio.addEventListener('ended', () => {
+                playButton.innerHTML = '<i class="fas fa-play"></i> 重新播放';
+                audioControls.style.display = 'none';
+            });
+        }
+        
+        // 播放/暂停音频
+        function toggleAudio() {
+            if (secretAudio.paused) {
+                secretAudio.play();
+                playButton.innerHTML = '<i class="fas fa-pause"></i> 暂停播放';
+                audioControls.style.display = 'flex';
+                
+                // 如果当前时间为0，表示刚开始播放
+                if (secretAudio.currentTime === 0) {
+                    // 创建大量爱心庆祝
+                    for (let i = 0; i < 20; i++) {
+                        setTimeout(createHeart, i * 100);
+                    }
+                }
+            } else {
+                secretAudio.pause();
+                playButton.innerHTML = '<i class="fas fa-play"></i> 继续播放';
+            }
+        }
+        
+        // 点击进度条跳转
+        function setupProgressBarClick() {
+            const progressContainer = document.querySelector('.progress-container');
+            
+            progressContainer.addEventListener('click', (e) => {
+                const width = progressContainer.clientWidth;
+                const clickX = e.offsetX;
+                const duration = secretAudio.duration;
+                
+                secretAudio.currentTime = (clickX / width) * duration;
+            });
+        }
+        
+        // 初始化页面
+        function init() {
+            initAudio();
+            setupProgressBarClick();
+            
+            // 播放按钮事件
+            playButton.addEventListener('click', toggleAudio);
+            
+            // 每隔一段时间创建爱心
+            setInterval(createHeart, 1500);
+            
+            // 初始创建一些爱心
+            for (let i = 0; i < 10; i++) {
+                setTimeout(createHeart, i * 300);
+            }
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('load', init);
+    </script>
+</body>
+</html>
