@@ -209,27 +209,6 @@
 				}
 			}
 
-			.music-control {
-				position: fixed;
-				bottom: 20px;
-				right: 20px;
-				width: 50px;
-				height: 50px;
-				background-color: rgba(255, 255, 255, 0.2);
-				backdrop-filter: blur(5px);
-				border-radius: 50%;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				cursor: pointer;
-				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-				z-index: 10;
-			}
-
-			.music-control i {
-				font-size: 24px;
-				color: white;
-			}
 
 			.progress-bar {
 				width: 100%;
@@ -267,10 +246,6 @@
 			</div>
 		</div>
 
-		<div class="music-control" id="musicControl">
-			<i class="fas fa-music"></i>
-		</div>
-
 		<div class="password-modal" id="passwordModal">
 			<div class="password-box">
 				<h2>输入密码听秘密留言</h2>
@@ -280,9 +255,7 @@
 			</div>
 		</div>
 
-		<audio id="birthdaySong" loop>
-			<source src="https://music.163.com/song?id=497918887&uct2=U2FsdGVkX18Qxz9eP+AJHmpAnDsIo4JohFISz5nIBIk=" type="audio/mpeg">
-		</audio>
+		<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=298 height=52 src="//music.163.com/outchain/player?type=2&id=2624235389&auto=1&height=32"></iframe>
 
 
 
@@ -295,7 +268,6 @@
 				'./img/5.webp',
 				'./img/6.webp',
 				'./img/7.webp',
-				'./img/8.webp',
 				'./img/9.webp',
 				'./img/10.webp',
 				'./img/11.webp',
@@ -317,7 +289,6 @@
 			const passwordInput = document.getElementById('passwordInput');
 			const submitPassword = document.getElementById('submitPassword');
 			const errorMsg = document.getElementById('errorMsg');
-			const birthdaySong = document.getElementById('birthdaySong');
 			const musicControl = document.getElementById('musicControl');
 			const progressBar = document.getElementById('progressBar');
 
@@ -373,9 +344,6 @@
 					errorMsg.style.display = 'none';
 					createConfetti();
 
-					// 停止生日歌，播放秘密留言
-					birthdaySong.pause();
-
 					// 跳转到下一个页面（这里简单显示一个提示）
 					setTimeout(() => {
 						window.location.href = "message.html"; // 替换为你的下一个页面
@@ -407,24 +375,11 @@
 				}
 			}
 
-			// 音乐控制
-			function toggleMusic() {
-				if (isPlaying) {
-					birthdaySong.pause();
-					musicControl.innerHTML = '<i class="fas fa-volume-mute"></i>';
-				} else {
-					birthdaySong.play();
-					musicControl.innerHTML = '<i class="fas fa-music"></i>';
-				}
-				isPlaying = !isPlaying;
-			}
-
+			
 			// 初始化页面
 			function init() {
 				initPhotoAlbum();
 
-				// 自动播放音乐
-				birthdaySong.play();
 
 				// 设置照片切换间隔
 				const photoInterval = setInterval(changePhoto, 3000);
@@ -442,7 +397,6 @@
 					}
 				});
 
-				musicControl.addEventListener('click', toggleMusic);
 
 				// 添加点击屏幕任意位置关闭音乐控制的功能
 				document.addEventListener('click', (e) => {
