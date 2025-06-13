@@ -97,6 +97,8 @@
             position: absolute;
             width: 100%;
             height: 100%;
+			top: 0;
+			left: 0;
             object-fit: cover;
             opacity: 0;
             transition: opacity 1s ease-in-out, transform 1s ease-in-out;
@@ -249,7 +251,6 @@
             photos.forEach((photo, index) => {
                 const img = document.createElement('img');
                 img.src = photo;
-                img.alt = `生日照片 ${index + 1}`;
                 img.className = 'photo';
                 if (index === 0) img.classList.add('active');
                 photoAlbum.appendChild(img);
