@@ -40,7 +40,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://img.freepik.com/free-vector/starry-night-sky-with-shining-stars_1048-14352.jpg') repeat;
+            background: url('https://img1.baidu.com/it/u=808907791,3837678308&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=789') repeat;
+			background-size: 100px;
             z-index: -1;
             animation: stars-move 100s linear infinite;
             opacity: 0.6;
@@ -224,17 +225,16 @@
         <h1>🎉 生日快乐！ 🎉</h1>
         
         <div class="photo-frame">
-            <img src="final-photo.jpg" alt="特别时刻" class="final-photo">
+            <img src="./img/dangao.webp" alt="特别时刻" class="final-photo">
         </div>
         
         <div class="message">
             这是我们共同的珍贵回忆<br>
             愿未来的每一天都如今天般美好<br>
-            点击下方按钮收听特别留言...
         </div>
         
         <button class="play-button" id="playButton">
-            <i class="fas fa-play"></i> 播放特别留言
+            <i class="fas fa-play"></i> 点我
         </button>
         
         <div class="audio-controls" id="audioControls" style="display: none;">
@@ -243,14 +243,14 @@
             </div>
             <div class="time-display">
                 <span id="currentTime">0:00</span>
-                <span id="duration">0:00</span>
+                <span id="duration">520:1314</span>
             </div>
         </div>
     </div>
     
     <audio id="secretAudio">
         <!-- 本地音频文件 -->
-        <source src="secret-message.mp3" type="audio/mpeg">
+        <source src="audio/我的祝福.mp3" type="audio/mpeg">
         您的浏览器不支持音频元素。
     </audio>
     

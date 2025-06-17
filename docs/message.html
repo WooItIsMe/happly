@@ -30,7 +30,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: url('https://img0.baidu.com/it/u=3937350810,3137837377&fm=253&app=138&f=JPEG?w=800&h=1732') center/cover;
+            background: url('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F202005%2F14%2F20200514182857_rhodh.thumb.1000_0.jpg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1752386825&t=6ade12d73ea04f3e2c8f2965f7ef736f') center/cover;
             z-index: -2;
             opacity: 0.9;
             animation: backgroundZoom 30s infinite alternate;
@@ -57,7 +57,7 @@
             text-align: center;
             padding: 20px;
             background-color: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(0px);
+            backdrop-filter: blur(10px);
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             margin: 20px 0;
@@ -97,6 +97,8 @@
             position: absolute;
             width: 100%;
             height: 100%;
+			top: 0;
+			left: 0;
             object-fit: cover;
             opacity: 0;
             transition: opacity 1s ease-in-out, transform 1s ease-in-out;
@@ -216,18 +218,26 @@
     
     <audio id="birthdaySong" autoplay loop>
         <!-- 替换为张杰《从人海到我们》的实际音乐链接 -->
-        <source src="https://music.163.com/song?id=1870267853&uct2=U2FsdGVkX18z/GMbO7/hsulEQy5EMppn8kovhqmTtkk=" type="audio/mpeg">
+        <source src="audio/从人海到我们.mp3" type="audio/mpeg">
         您的浏览器不支持音频元素。
     </audio>
     
     <script>
         // 照片数组 - 替换为你的本地图片路径
         const photos = [
-            'photo1.jpg',
-            'photo2.jpg',
-            'photo3.jpg',
-            'photo4.jpg',
-            'photo5.jpg'
+            './img/A1.webp',
+            './img/A2.webp',
+            './img/A3.webp',
+            './img/A4.webp',
+            './img/A5.webp',
+            './img/A6.webp',
+            './img/A7.webp',
+            './img/A8.webp',
+            './img/A9.webp',
+            './img/A10.webp',
+            './img/A11.webp',
+            './img/A12.webp',
+            './img/A13.webp',
         ];
         
         // DOM元素
@@ -249,7 +259,6 @@
             photos.forEach((photo, index) => {
                 const img = document.createElement('img');
                 img.src = photo;
-                img.alt = `生日照片 ${index + 1}`;
                 img.className = 'photo';
                 if (index === 0) img.classList.add('active');
                 photoAlbum.appendChild(img);
